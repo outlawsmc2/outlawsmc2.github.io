@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+            /* Added for Matrix effect */
+            overflow: hidden; /* Prevent scrollbars from canvas */
+            position: relative; /* Essential for absolute positioning of canvas */
+        }
+        /* Matrix Rain Canvas */
+        #matrix-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Send it to the background */
+            background: black; /* Ensures a dark background for the rain */
+        }
+
+        #login-container, #links-container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            /* Ensure containers are above the canvas */
+            position: relative; /* Crucial for z-index to work */
+            z-index: 1;
+        }
+        #links-container {
+            display: none;
+            width: 500px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .input-group {
+            margin-bottom: 1rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #error-message {
+            color: red;
+            text-align: center;
+            margin-top: 1rem;
+            display: none;
+        }
+        #links-list {
+            list-style-type: none;
+            padding: 0;
+            column-count: 2;
+        }
+        #links-list li {
+            margin-bottom: 0.5rem;
+        }
+        #links-list a {
+            text-decoration: none;
+            color: #007bff;
+        }
+        #links-list a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="matrix-canvas"></canvas>
+
+<div id="login-container">
+    <h2>Login</h2>
+    <form id="login-form">
+        <div class="input-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" required>
+        </div>
+        <div class="input-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" required>
+        </div>
+        <button type="submit">Login</button>
+        <p id="error-message">Invalid username or password.</p>
+    </form>
+</div>
+
+<div id="links-container">
+    <h2>Links</h2>
+    <ul id="links-list">
+        <li><a href="#">Link 1</a></li>
+        <li><a href="#">Link 2</a></li>
+        <li><a href="#">Link 3</a></li>
+        <li><a href="#">Link 4</a></li>
+        <li><a href="#">Link 5</a></li>
+        <li><a href="#">Link 6</a></li>
+        <li><a href="#">Link 7</a></li>
+        <li><a href="#">Link 8</a></li>
+        <li><a href="#">Link 9</a></li>
+        <li><a href="#">Link 10</a></li>
+        <li><a href="#">Link 11</a></li>
+        <li><a href="#">Link 12</a></li>
+        <li><a href="#">Link 13</a></li>
+        <li><a href="#">Link 14</a></li>
+        <li><a href="#">Link 15</a></li>
+        <li><a href="#">Link 16</a></li>
+        <li><a href="#">Link 17</a></li>
+        <li><a href="#">Link 18</a></li>
+        <li><a href="#">Link 19</a></li>
+        <li><a href="#">Link 20</a></li>
+        <li><a href="#">Link 21</a></li>
+        <li><a href="#">Link 22</a></li>
+        <li><a href="#">Link 23</a></li>
+        <li><a href="#">Link 24</a></li>
+        <li><a href="#">Link 25</a></li>
+        <li><a href="#">Link 26</a></li>
+        <li><a href="#">Link 27</a></li>
+        <li><a href="#">Link 28</a></li>
+        <li><a href="#">Link 29</a></li>
+        <li><a href="#">Link 30</a></li>
+        <li><a href="#">Link 31</a></li>
+        <li><a href="#">Link 32</a></li>
+        <li><a href="#">Link 33</a></li>
+        <li><a href="#">Link 34</a></li>
+        <li><a href="#">Link 35</a></li>
+        <li><a href="#">Link 36</a></li>
+        <li><a href="#">Link 37</a></li>
+        <li><a href="#">Link 38</a></li>
+        <li><a href="#">Link 39</a></li>
+        <li><a href="#">Link 40</a></li>
+    </ul>
+</div>
+
+<script>
+    document.getElementById('login-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const errorMessage = document.getElementById('error-message');
+
+        if (username === 'Rufus' && password === 'SA-236178-CD') {
+            document.getElementById('login-container').style.display = 'none';
+            document.getElementById('links-container').style.display = 'block';
+            errorMessage.style.display = 'none';
+        } else {
+            errorMessage.style.display = 'block';
+        }
+    });
+
+    // --- Matrix Rain Effect JavaScript ---
+    const canvas = document.getElementById('matrix-canvas');
+    const ctx = canvas.getContext('2d');
+
+    // Set canvas size to full window initially
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // Characters for the Matrix effect (numbers and letters)
+    const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    const fontSize = 16;
+    const columns = Math.floor(canvas.width / fontSize); // Use Math.floor for whole columns
+
+    // drops[i] will be the y coordinate of the character falling in the i-th column
+    const drops = [];
+    for (let i = 0; i < columns; i++) {
+        drops[i] = 1; // Start drops from the top
+    }
+
+    function drawMatrixRain() {
+        // Black semi-transparent background to fade out previous characters
+        // This creates the "trailing" effect. Lower alpha means longer trails.
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Green characters
+        ctx.fillStyle = '#0F0'; // Bright green color
+        ctx.font = fontSize + 'px monospace'; // Monospace font for aligned characters
+
+        for (let i = 0; i < drops.length; i++) {
+            // Get a random character from the defined set
+            const text = characters.charAt(Math.floor(Math.random() * characters.length));
+
+            // Draw the character at its current position
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+            // If the character has gone off the bottom of the screen,
+            // or randomly (to create new drops starting), reset it to the top.
+            // The `Math.random() > 0.975` makes it random when a new drop starts,
+            // otherwise all drops would hit the bottom and restart at the same time.
+            if (drops[i] * fontSize > canvas.height || Math.random() > 0.975) {
+                drops[i] = 0; // Reset to the top
+            }
+
+            // Increment y coordinate to make the character fall
+            drops[i]++;
+        }
+    }
+
+    // --- Event Listeners for Responsiveness and Animation ---
+
+    // Adjust canvas size and re-initialize drops when window is resized
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        // Recalculate columns and reset drops based on new width
+        const newColumns = Math.floor(canvas.width / fontSize);
+        drops.length = 0; // Clear existing drops
+        for (let i = 0; i < newColumns; i++) {
+            drops[i] = 1; // Re-initialize drops from the top
+        }
+    });
+
+    // Run the animation
+    // Using requestAnimationFrame for smoother animation
+    let animationFrameId;
+    function animateMatrix() {
+        drawMatrixRain();
+        animationFrameId = requestAnimationFrame(animateMatrix);
+    }
+
+    // Start the animation
+    animateMatrix();
+
+    // You might want to stop the animation when the user leaves the page or tab
+    // Or if the display changes (e.g., login success)
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            cancelAnimationFrame(animationFrameId);
+        } else {
+            animateMatrix();
+        }
+    });
+
+    // You could also stop the animation after successful login
+    // For this example, it continues, but here's how you'd stop it:
+    // document.getElementById('login-form').addEventListener('submit', function(event) {
+    //     // ... existing login logic ...
+    //     if (username === 'Rufus' && password === 'SA-236178-CD') {
+    //         // ... existing display changes ...
+    //         cancelAnimationFrame(animationFrameId); // Stop the animation
+    //     }
+    // });
+
+</script>
+
+</body>
+</html>
