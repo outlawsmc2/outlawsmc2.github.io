@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Kaleidoscop</title>
     <style>
         body {
             font-family: sans-serif;
@@ -13,9 +13,9 @@
             height: 100vh;
             margin: 0;
             background-color: #f0f2f5;
-            /* Added for Matrix effect */
-            overflow: hidden; /* Prevent scrollbars from canvas */
-            position: relative; /* Essential for absolute positioning of canvas */
+            overflow: hidden;
+            position: relative;
+            flex-direction: column; /* Added for centering multiple elements */
         }
         /* Matrix Rain Canvas */
         #matrix-canvas {
@@ -24,19 +24,23 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1; /* Send it to the background */
-            background: black; /* Ensures a dark background for the rain */
+            z-index: -1;
+            background: black;
         }
 
-        #login-container, #links-container {
+        #intro-container, #login-container, #links-container {
             background-color: white;
             padding: 2rem;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            /* Ensure containers are above the canvas */
-            position: relative; /* Crucial for z-index to work */
+            width: 400px; /* Increased width for intro message */
+            position: relative;
             z-index: 1;
+            text-align: center; /* Center text in intro */
+        }
+        #login-container {
+            display: none; /* Hidden by default */
+            width: 300px;
         }
         #links-container {
             display: none;
@@ -68,6 +72,7 @@
             color: white;
             font-size: 1rem;
             cursor: pointer;
+            margin-top: 1rem; /* Added margin for buttons */
         }
         button:hover {
             background-color: #0056b3;
@@ -93,11 +98,28 @@
         #links-list a:hover {
             text-decoration: underline;
         }
+        /* Style for the intro message text */
+        #intro-message {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
     </style>
 </head>
 <body>
 
 <canvas id="matrix-canvas"></canvas>
+
+<div id="intro-container">
+    <h2>Salut !</h2>
+    <p id="intro-message">
+        Prietenul meu Rufus și-a uitat numele de utilizator și parola contului. Te rog, ajută-l să le recupereze!
+        El locuiește în Sandy, în apropierea coordonatelor:
+        <br>X: 1894.908 | Y: 3898.780
+        <br>Spor!
+    </p>
+    <button id="proceed-button">Ajută-l pe Rufus.</button>
+</div>
 
 <div id="login-container">
     <h2>Login</h2>
@@ -118,50 +140,66 @@
 <div id="links-container">
     <h2>Links</h2>
     <ul id="links-list">
-        <li><a href="#">Link 1</a></li>
-        <li><a href="#">Link 2</a></li>
-        <li><a href="#">Link 3</a></li>
-        <li><a href="#">Link 4</a></li>
-        <li><a href="#">Link 5</a></li>
-        <li><a href="#">Link 6</a></li>
-        <li><a href="#">Link 7</a></li>
-        <li><a href="#">Link 8</a></li>
-        <li><a href="#">Link 9</a></li>
-        <li><a href="#">Link 10</a></li>
-        <li><a href="#">Link 11</a></li>
-        <li><a href="#">Link 12</a></li>
-        <li><a href="#">Link 13</a></li>
-        <li><a href="#">Link 14</a></li>
-        <li><a href="#">Link 15</a></li>
-        <li><a href="#">Link 16</a></li>
-        <li><a href="#">Link 17</a></li>
-        <li><a href="#">Link 18</a></li>
-        <li><a href="#">Link 19</a></li>
-        <li><a href="#">Link 20</a></li>
-        <li><a href="#">Link 21</a></li>
-        <li><a href="#">Link 22</a></li>
-        <li><a href="#">Link 23</a></li>
-        <li><a href="#">Link 24</a></li>
-        <li><a href="#">Link 25</a></li>
-        <li><a href="#">Link 26</a></li>
-        <li><a href="#">Link 27</a></li>
-        <li><a href="#">Link 28</a></li>
-        <li><a href="#">Link 29</a></li>
-        <li><a href="#">Link 30</a></li>
-        <li><a href="#">Link 31</a></li>
-        <li><a href="#">Link 32</a></li>
-        <li><a href="#">Link 33</a></li>
-        <li><a href="#">Link 34</a></li>
-        <li><a href="#">Link 35</a></li>
-        <li><a href="#">Link 36</a></li>
-        <li><a href="#">Link 37</a></li>
-        <li><a href="#">Link 38</a></li>
-        <li><a href="#">Link 39</a></li>
-        <li><a href="#">Link 40</a></li>
+        <li><a href="https://imgur.com/3bQ0ZEB">🦿</a></li>
+        <li><a href="https://imgur.com/pQOw2YM">👾</a></li>
+        <li><a href="https://imgur.com/MTaimC7">👹</a></li>
+        <li><a href="https://imgur.com/hHY754P">🥷</a></li>
+        <li><a href="https://imgur.com/aqNNasD">🧟‍♂️</a></li>
+        <li><a href="https://imgur.com/bm0Y8Fy">🕶️</a></li>
+        <li><a href="https://imgur.com/VdG35KS">🧌</a></li>
+        <li><a href="https://imgur.com/8yVyYMn">🧛</a></li>
+        <li><a href="https://imgur.com/pCierix">🧦</a></li>
+        <li><a href="https://imgur.com/XoANbdh">🎩</a></li>
+        <li><a href="https://imgur.com/FLLo6gM">🧢</a></li>
+        <li><a href="https://imgur.com/20dbJKk">🪖</a></li>
+        <li><a href="https://imgur.com/cSqBMMX">🐧</a></li>
+        <li><a href="https://imgur.com/QPe6ghQ">🌵</a></li>
+        <li><a href="https://imgur.com/lTwj9KX">🥀</a></li>
+        <li><a href="https://imgur.com/bSsEm5e">🦨</a></li>
+        <li><a href="https://imgur.com/BOevX47">🎭</a></li>
+        <li><a href="https://imgur.com/6mzMOME">🗿</a></li>
+        <li><a href="https://imgur.com/EHl4Q2d">🗽</a></li>
+        <li><a href="https://imgur.com/DMj3V2j">⛲</a></li>
+        <li><a href="https://imgur.com/7RUitF9">🚀</a></li>
+        <li><a href="https://imgur.com/AHHzuxu">🛰️</a></li>
+        <li><a href="https://imgur.com/Agckifh">🛸</a></li>
+        <li><a href="https://imgur.com/HdT3NaJ">🌏</a></li>
+        <li><a href="https://imgur.com/f9oASJ8">🎞️</a></li>
+        <li><a href="https://imgur.com/9c4QW3J">🔬</a></li>
+        <li><a href="https://imgur.com/xcxe30w">🪜</a></li>
+        <li><a href="https://imgur.com/JW3Mzhz">🧨</a></li>
+        <li><a href="https://imgur.com/OkpBZX9">☢️</a></li>
+        <li><a href="https://imgur.com/N7MKsHo">🌐</a></li>
+        <li><a href="https://imgur.com/v5iQjf7">📢</a></li>
+        <li><a href="https://imgur.com/oIjt3Ww">🔋</a></li>
+        <li><a href="https://imgur.com/KAu9dnp">🛡️</a></li>
+        <li><a href="https://imgur.com/bfu8BDr">🧸</a></li>
+        <li><a href="https://imgur.com/lUlwziE">🔮</a></li>
+        <li><a href="https://imgur.com/E5U1T32">💎</a></li>
+        <li><a href="https://imgur.com/ZZiZyNs">💊</a></li>
+        <li><a href="https://imgur.com/lkeY3x7">🧯</a></li>
+        <li><a href="https://imgur.com/pjmdqMy">🏈</a></li>
+        <li><a href="https://imgur.com/rAXpCof">🏆</a></li>
     </ul>
 </div>
 
 <script>
+    // --- Initial Page Load ---
+    document.addEventListener('DOMContentLoaded', function() {
+        // Show the intro container by default
+        document.getElementById('intro-container').style.display = 'block';
+        // Hide the login and links containers
+        document.getElementById('login-container').style.display = 'none';
+        document.getElementById('links-container').style.display = 'none';
+    });
+
+    // --- Proceed Button Logic ---
+    document.getElementById('proceed-button').addEventListener('click', function() {
+        document.getElementById('intro-container').style.display = 'none';
+        document.getElementById('login-container').style.display = 'block';
+    });
+
+    // --- Login Form Logic ---
     document.getElementById('login-form').addEventListener('submit', function(event) {
         event.preventDefault();
 
@@ -242,7 +280,6 @@
     });
 
     // Run the animation
-    // Using requestAnimationFrame for smoother animation
     let animationFrameId;
     function animateMatrix() {
         drawMatrixRain();
@@ -252,8 +289,7 @@
     // Start the animation
     animateMatrix();
 
-    // You might want to stop the animation when the user leaves the page or tab
-    // Or if the display changes (e.g., login success)
+    // Pause/resume animation based on tab visibility
     document.addEventListener('visibilitychange', () => {
         if (document.hidden) {
             cancelAnimationFrame(animationFrameId);
@@ -261,16 +297,6 @@
             animateMatrix();
         }
     });
-
-    // You could also stop the animation after successful login
-    // For this example, it continues, but here's how you'd stop it:
-    // document.getElementById('login-form').addEventListener('submit', function(event) {
-    //     // ... existing login logic ...
-    //     if (username === 'Rufus' && password === 'SA-236178-CD') {
-    //         // ... existing display changes ...
-    //         cancelAnimationFrame(animationFrameId); // Stop the animation
-    //     }
-    // });
 
 </script>
 
